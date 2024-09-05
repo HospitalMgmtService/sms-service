@@ -1,0 +1,24 @@
+spring:
+  config:
+    import: secrets.yml
+  application:
+    name: sms-service
+
+server:
+  port: 9194
+  servlet:
+    context-path: /sms
+
+smpp:
+  tr:
+    host: localhost
+    port: 2775
+  source:
+    addr:
+      ton: 5
+      npi: 1
+    address: TEST
+  dest:
+    addr:
+      ton: 0
+      npi: 0
