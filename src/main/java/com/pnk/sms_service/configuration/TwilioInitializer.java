@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Slf4j
 public class TwilioInitializer {
-    private final TwilioConfiguration twilioConfiguration;
+    private TwilioConfiguration twilioConfiguration;
 
 
     @Autowired
