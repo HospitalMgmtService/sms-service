@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: sms-service
+  config:
+    import: secrets.yml
+
+server:
+  port: 9194
+  servlet:
+    context-path: /sms
+
+#twilio:
+#  account_sid: AC0**********
+#  auth_token: 23************
+#  trial_number: +1**********
+
+# Logging Configuration
+logging:
+  file:
+    name: sms-service.log
+    max-size: 10MB
+    max-history: 10
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
+
+# Sonar Configuration
+sonar:
+  projectKey: sms-service
+  projectName: Hospital Management project
+  host:
+    url: http://localhost:9000
