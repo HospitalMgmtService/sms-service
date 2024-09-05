@@ -5,7 +5,7 @@ spring:
     import: secrets.yml
 
 server:
-  port: 9194
+  port: 9195
   servlet:
     context-path: /sms
 
