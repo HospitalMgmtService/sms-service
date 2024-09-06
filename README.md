@@ -12,16 +12,41 @@ This microservice is responsible for:
 * Framework: Spring boot 3.2.x
 * DBMS: MongoDB
 
-## Executions
+## Format code
+`mvn spotless:apply`
 
-### Install Mongodb from Docker Hub
+## JaCoCo report
+`mvn clean test jacoco:report`
 
-`docker pull bitnami/mongodb:7.0.12`
+## SonarQube
+* `docker pull sonarqube:lts-community`
+* `docker run --name sonar-qube -p 9000:9000 -d sonarqube:lts-community`
+* `mvn clean verify sonar:sonar -Dsonar.projectKey=phongvo.sms.master -Dsonar.host.url=http://localhost:9000 -Dsonar.login=sqp_b33a4a7a230bcb98ad783b9ee2b678ae9c8fb404`
 
-### Start Mongodb server at port 27017 with root username and password: root/root
+## Start application
+`mvn spring-boot:run`
 
-`docker run -d --name mongodb-7.0.12 -p 27017:27017 -e MONGODB_ROOT_USER=root -e MONGODB_ROOT_PASSWORD=root bitnami/mongodb:7.0.12`
+## Build application
+`mvn clean package`
 
-### Install Kafka
+## Docker guideline
+### Build docker image
+`docker build -t sms-service:0.9.0 .`
 
-`PS C:\SpringBootProjects\HospitalMgmtService> docker compose up -d`
+### Tag the image
+`docker tag sms-service:0.9 <DOCKER_ACCOUNT>/sms-service:0.9.0`
+
+### Push docker image to Docker Hub
+`docker push <DOCKER_ACCOUNT>/sms-service:0.9`
+
+### Run the built image
+`docker run -d --name sms-service -p 9190:9190 sms-service:0.9.0`
+
+### Create network
+`docker network create pnk-network`
+
+### Start Postgresql in pnk-network
+`docker run --network pnk-network --name postgresql -p 5432:5432 -e POSTGRESQL_ROOT_PASSWORD=root -d postgresql:8.0.36-debian`
+
+### Run your application in pnk-network
+`docker run --name sms-service --network pnk-network -p 9190:9190 -e DBMS_CONNECTION=jdbc:postgresql://localhost:5432/hospital sms-service:0.9`

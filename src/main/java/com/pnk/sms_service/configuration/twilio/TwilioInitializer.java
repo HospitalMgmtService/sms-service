@@ -1,4 +1,4 @@
-package com.pnk.sms_service.configuration;
+package com.pnk.sms_service.configuration.twilio;
 
 import com.twilio.Twilio;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Slf4j
 public class TwilioInitializer {
-    private TwilioConfiguration twilioConfiguration;
+    private final TwilioConfiguration twilioConfiguration;
 
 
     @Autowired
@@ -19,6 +19,6 @@ public class TwilioInitializer {
                 twilioConfiguration.getAccountSid(),
                 twilioConfiguration.getAuthToken()
         );
-        log.info("Twilio initialized ... with account sid {} ", twilioConfiguration.getAccountSid());
+        log.info(">> TwilioInitializer >> Twilio initialized ... with account sid {} ", twilioConfiguration.getAccountSid());
     }
 }

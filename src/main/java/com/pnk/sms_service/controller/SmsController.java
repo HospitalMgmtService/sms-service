@@ -1,7 +1,9 @@
 package com.pnk.sms_service.controller;
 
 import com.pnk.sms_service.dto.request.SmsRequest;
-import com.pnk.sms_service.service.SmsService;
+import com.pnk.sms_service.dto.response.ApiResponse;
+import com.pnk.sms_service.dto.response.SmsResponse;
+import com.pnk.sms_service.service.TwilioSmsSenderService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class SmsController {
 
-    private final SmsService smsService;
+    final TwilioSmsSenderService twilioSmsSenderService;
 
 
     @PostMapping("/send")
-    public void sendSms(@Valid @RequestBody SmsRequest smsRequest) {
-        smsService.sendSms(smsRequest);
+    public ApiResponse<SmsResponse> postSms(@Valid @RequestBody SmsRequest smsRequest) {
+        log.info(">> postSms >> Sending out smsRequest: {}", smsRequest);
+
+        return ApiResponse.<SmsResponse>builder()
+                .result(twilioSmsSenderService.sendSms(smsRequest))
+                .build();
     }
 }
