@@ -2,21 +2,22 @@ package com.pnk.sms_service.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 
-@Getter
-@Setter
-@ToString
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class SmsRequest {
 
     @NotBlank
     @JsonProperty("phoneNumber")
-    private String phoneNumber; // destination
+    String phoneNumber; // destination
 
     @NotBlank
     @JsonProperty("message")
-    private String message;
+    String message;
 }

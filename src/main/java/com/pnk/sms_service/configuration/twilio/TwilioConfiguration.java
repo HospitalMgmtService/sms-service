@@ -1,4 +1,4 @@
-package com.pnk.sms_service.configuration;
+package com.pnk.sms_service.configuration.twilio;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
