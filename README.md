@@ -43,10 +43,10 @@ This microservice is responsible for:
 `docker run -d --name sms-service -p 9190:9190 sms-service:0.9.0`
 
 ### Create network
-`docker network create pnk-network`
+`docker network create phongvo-network`
 
-### Start Postgresql in pnk-network
-`docker run --network pnk-network --name postgresql -p 5432:5432 -e POSTGRESQL_ROOT_PASSWORD=root -d postgresql:8.0.36-debian`
+### Start Postgresql in phongvo-network
+`docker run --network phongvo-network --name postgresql -p 5432:5432 -e POSTGRESQL_ROOT_PASSWORD=root -d postgresql:8.0.36-debian`
 
-### Run your application in pnk-network
-`docker run --name sms-service --network pnk-network -p 9190:9190 -e DBMS_CONNECTION=jdbc:postgresql://localhost:5432/hospital sms-service:0.9`
+### Run your application in phongvo-network
+`docker run --name sms-service --network phongvo-network -p 9190:9190 -e DBMS_CONNECTION=jdbc:postgresql://localhost:5432/hospital sms-service:0.9`

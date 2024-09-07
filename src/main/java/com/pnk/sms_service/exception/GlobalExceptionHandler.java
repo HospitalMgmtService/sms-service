@@ -1,10 +1,12 @@
 package com.pnk.sms_service.exception;
 
 import com.pnk.sms_service.dto.response.ApiResponse;
+import com.twilio.exception.ApiException;
 import jakarta.validation.ConstraintViolation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,7 +30,9 @@ public class GlobalExceptionHandler {
         apiResponse.setCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode());
         apiResponse.setMessage(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(apiResponse);
     }
 
 
@@ -60,7 +64,9 @@ public class GlobalExceptionHandler {
                         ? mapAttribute(errorCode.getMessage(), attributes)
                         : errorCode.getMessage());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(apiResponse);
     }
 
 
@@ -79,7 +85,35 @@ public class GlobalExceptionHandler {
         apiResponse.setCode(errorCode.getCode());
         apiResponse.setMessage(errorCode.getMessage());
 
-        return ResponseEntity.status(errorCode.getHttpStatusCode()).body(apiResponse);
+        return ResponseEntity
+                .status(errorCode.getHttpStatusCode())
+                .body(apiResponse);
+    }
+
+
+    @ExceptionHandler(value = AccessDeniedException.class)
+    ResponseEntity<ApiResponse> handlingAccessDeniedException(AccessDeniedException exception) {
+        ErrorCode errorCode = ErrorCode.UNAUTHORIZED;
+
+        return ResponseEntity
+                .status(errorCode.getHttpStatusCode())
+                .body(ApiResponse.builder()
+                        .code(errorCode.getCode())
+                        .message(errorCode.getMessage())
+                        .build());
+    }
+
+
+    @ExceptionHandler(value = ApiException.class)
+    ResponseEntity<ApiResponse> handlingApiException(ApiException exception) {
+        ErrorCode errorCode = ErrorCode.INVALID_PHONE_NUM;
+
+        return ResponseEntity
+                .status(errorCode.getHttpStatusCode())
+                .body(ApiResponse.builder()
+                        .code(errorCode.getCode())
+                        .message(errorCode.getMessage())
+                        .build());
     }
 
 }
