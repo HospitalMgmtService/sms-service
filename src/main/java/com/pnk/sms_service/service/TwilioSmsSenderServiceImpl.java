@@ -12,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -26,6 +27,7 @@ public class TwilioSmsSenderServiceImpl implements TwilioSmsSenderService {
     private final TwilioConfiguration twilioConfiguration;
 
 
+    @PreAuthorize("hasRole('ADMIN')")       // authorize before the method called
     @Override
     public SmsResponse sendSms(SmsRequest smsRequest) {
         if (!isPhoneNumberValid(smsRequest.getPhoneNumber())) {
