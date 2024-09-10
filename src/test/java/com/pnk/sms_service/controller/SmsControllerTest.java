@@ -105,7 +105,7 @@ class SmsControllerTest {
     "code": 1000,
     "result": {
         "phoneNumber": {
-            "endpoint": "9789628997"
+            "endpoint": "0123456789"
         },
         "message": "Hello! This is an SMS was sent from SMS-service in Hospital Mgmt project.",
         "sendingStatus": "SENT",
